@@ -48,3 +48,4 @@ jobs:
       with:
         files: "*.tar.gz"
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+        release-tag: "${{ inputs.tag }}"
