@@ -36,7 +36,7 @@ jobs:
           ./.build/release/simian
         outPath: "simian-release-${{ inputs.tag }}.tar.gz"
     - name: Release
-      uses: actions/create-release@v1
+      uses: comnoco/create-release@v2
       with:
         tag: "${{ inputs.tag }}"
         release_name: "${{ inputs.tag }}" 
