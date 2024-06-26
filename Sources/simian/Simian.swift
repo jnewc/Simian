@@ -29,7 +29,7 @@ class Simian: SimianLogReporter {
             if arguments.count > 1 {
                 logger.error("Command `\(arguments[1])` not found, command must be one of: \(allCommands)")
             } else {
-                logger.error("Command was not provided - first argument must be a command from: allCommands")
+                logger.error("Command was not provided - first argument must be a command from: \(allCommands)")
             }
             return
         }
