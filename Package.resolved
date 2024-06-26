@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "bluesocket",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kitura/BlueSocket",
+      "state" : {
+        "revision" : "7b23a867008e0027bfd6f4d398d44720707bc8ca",
+        "version" : "2.0.4"
+      }
+    },
+    {
+      "identity" : "cosmic",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jnewc/Cosmic",
+      "state" : {
+        "revision" : "0c836f1c9935418c613c3f9913e32412ded5c782",
+        "version" : "7.3.1"
+      }
+    },
+    {
+      "identity" : "regex",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/crossroadlabs/Regex.git",
+      "state" : {
+        "revision" : "166728756082a9cac6e4aed3ebbce8e41cb3a945",
+        "version" : "1.2.0"
+      }
+    }
+  ],
+  "version" : 2
+}
