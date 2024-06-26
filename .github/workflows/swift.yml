@@ -1,0 +1,32 @@
+name: Swift
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    # - uses: maxim-lobanov/setup-xcode@v1
+    #   with:
+    #     xcode-version: latest-stable
+    - uses: fwal/setup-swift@v2.0.0
+      with:
+        swift-version: "5.9"
+    - name: List files
+      shell: bash
+      run: |
+        ls
+        echo "-----"
+        find .
+    - name: Build
+      shell: bash
+      run: |
+        swift build -c release
