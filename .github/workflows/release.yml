@@ -36,10 +36,12 @@ jobs:
           ./.build/release/simian
         outPath: "simian-release-${{ inputs.tag }}.tar.gz"
     - name: Release
-      uses: comnoco/create-release@v2
+      uses: actions/create-release@v2
       with:
         tag: "${{ inputs.tag }}"
-        release_name: "${{ inputs.tag }}" 
+        release_name: "${{ inputs.tag }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - uses: AButler/upload-release-assets@v3.0
       with:
         files: "*.tar.gz"
