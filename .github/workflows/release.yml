@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag: 
+        required: true
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+    - name: Setup Swift toolchain
+      uses: fwal/setup-swift@v2.0.0
+      with:
+        swift-version: "5.9"
+    - name: List files
+      shell: bash
+      run: |
+        ls
+        echo "-----"
+        find .
+    - name: Build
+      shell: bash
+      run: |
+        swift build -c release
+    - name: Create tarball
+      uses: a7ul/tar-action@v1.1.0
+      with:
+        command: c
+        cwd: .
+        files: |
+          ./.build/release/simian
+        outPath: "simian-release-${{ inputs.tag }}.tar.gz"
+    - name: Release
+      uses: actions/create-release@v1
+      with:
+        tag: "${{ inputs.tag }}"
+        release_name: "${{ inputs.tag }}" 
+    - uses: AButler/upload-release-assets@v3.0
+      with:
+        files: "*.tar.gz"
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
