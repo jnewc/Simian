@@ -29,13 +29,14 @@ jobs:
       shell: bash
       run: |
         swift build -c release
+        cp ./.build/release/simian ./
     - name: Create tarball
       uses: a7ul/tar-action@v1.1.0
       with:
         command: c
         cwd: .
         files: |
-          ./.build/release/simian
+          ./simian
         outPath: "simian-release-${{ inputs.tag }}.tar.gz"
     - name: Release
       uses: actions/create-release@v1
