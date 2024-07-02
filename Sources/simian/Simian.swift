@@ -27,10 +27,12 @@ class Simian: SimianLogReporter {
         guard let command = command else {
             let allCommands = Command.allCases.map { $0.rawValue }.joined(separator: ", ")
             if arguments.count > 1 {
-                logger.error("Command `\(arguments[1])` not found, command must be one of: \(allCommands)")
+                logger.error("Command `\(arguments[1])` not found, command must be one of: \(allCommands)".red)
             } else {
-                logger.error("Command was not provided - first argument must be a command from: \(allCommands)")
+                logger.error("Command was not provided - first argument must be a command from: \(allCommands)".red)
             }
+            _logger.info("")
+            printHelp()
             return
         }
         command.execute()
@@ -57,6 +59,20 @@ class Simian: SimianLogReporter {
         
         return commandArgs
     }
+    
+    private func printHelp() {
+        _logger.info("""
+\("Simian".bold.cyan) - a tool for managing simulators
+
+Commands:
+    \("boot".bold) - Boot a simulator
+    \("shutdown".bold) - Shut down a simulator
+    \("list".bold) - List simulators by platform
+    \("info".bold) - Get detailed information about a simulator
+
+For more information 👉 https://github.com/jnewc/Simian
+""")
+    }
 }
 
 // MARK: Command enum
@@ -69,22 +85,7 @@ extension Simian {
         case shutdown
         case info
         case list
-        
-//        var isExecutable: Bool {
-//            return requiredArguments.allSatisfy { arguments["-\($0)"] != nil }
-//        }
-//        
-//        var argumentsErrorMessage: String {
-//            let args = requiredArguments.map { "-\($0)" }.joined(separator: ", ")
-//            return "The `\(rawValue)` command requires the following arguments: \(args)"
-//        }
-//        
-//        var requiredArguments: [String] {
-//            switch self {
-//            default:
-//                return ["platform", "device", "name"]
-//            }
-//        }
+        case help
         
         private var arguments: [String: String?] {
             Simian.shared.commandArguments
@@ -108,6 +109,8 @@ extension Simian {
                     try SimctlHelper.shared.info(key: key, value: value, platform: platform)
                 case .list:
                     try SimctlHelper.shared.list()
+                default:
+                    Simian.shared.printHelp()
                 }
             } catch {
                 _logger.error(error.localizedDescription.red)
@@ -115,7 +118,7 @@ extension Simian {
         }
         
         // MARK: Helpers
-    
+        
         private typealias DeviceArguments = (key: KeyPath<Device, String>, value: String, platform: String)
         
         private func getDeviceArguments() throws -> DeviceArguments {
