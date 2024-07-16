@@ -15,9 +15,6 @@ struct SimianError: Swift.Error {
         self.description = description
     }
     
-    public var localizedDescription: String {
-        description
-    }
 }
 
 class SimianLogReporter: LogReporter {
@@ -25,7 +22,7 @@ class SimianLogReporter: LogReporter {
         required init() {
             super.init()
             self.logLevel = .debug
-            formatters.append(λFormatter { msg, _, _ in "📱 \(msg)" })
+//            formatters.append(λFormatter { msg, _, _ in "📱 \(msg)" })
             loggers.append(PrintLogger())
         }
     }

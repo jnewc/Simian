@@ -62,7 +62,7 @@ class Simian: SimianLogReporter {
     
     private func printHelp() {
         _logger.info("""
-\("Simian".bold.cyan) - a tool for managing simulators
+📱 \("Simian".bold.cyan) - a tool for managing simulators
 
 Commands:
     \("boot".bold) - Boot a simulator
@@ -112,6 +112,8 @@ extension Simian {
                 default:
                     Simian.shared.printHelp()
                 }
+            } catch let error as SimianError {
+                _logger.error(error.description.red)
             } catch {
                 _logger.error(error.localizedDescription.red)
             }
@@ -123,7 +125,7 @@ extension Simian {
         
         private func getDeviceArguments() throws -> DeviceArguments {
             guard let platform = arguments["-platform"] as? String else {
-                throw SimianError("-platform argument requires a string parameter")
+                throw SimianError("'-platform' argument must be provided")
             }
             
             let key: KeyPath<Device, String>
@@ -137,7 +139,7 @@ extension Simian {
                 value = format(device: _value)
                 _logger.debug("Using device type identifier: \(value)")
             } else {
-                throw SimianError("One of 'device' or 'name' arguments must be provided")
+                throw SimianError("One of '-device' or '-name' arguments must be provided")
             }
             
             return (key: key, value: value, platform: platform)
