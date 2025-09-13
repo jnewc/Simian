@@ -66,8 +66,8 @@ class SimctlHelper: DefaultLogReporter {
         guard let device = devices.first else {
             throw SimianError("""
 No devices found for '\(key)' -> '\(value)' and platform version '\(platform)'.
-Check the name you have provided matches one of the following for the platform:
-\(allDevices.map { " - \($0.name)\n" })
+Check the name you have provided matches one of the following devices for the platform:
+\(allDevices.map { " - \($0.name)" }.filter { !($0.isEmpty || $0.isWhitespace) }.joined(separator: "\n"))
 """)
         }
         
